@@ -7,6 +7,7 @@ import ProtectedRoute from './components/protectedRoute'
 import DashBoard from './components/Dashboard'
 import Register from './components/Register'
 
+
 function App() {
   console.log("rendered")
 

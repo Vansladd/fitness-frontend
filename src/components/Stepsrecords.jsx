@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getStepRecords, addStepRecord } from '../services/api';
-import axiosInstance from '../services/axiosinstance';
+import StepChart from './StepChart';
+import { useDispatch } from 'react-redux';
+import { setStepRecords } from '../services/stepRecordsSlice';
 
 const Stepsrecords = () => {
-    const [stepRecords, setStepRecords] = useState([]);
+    const dispatch = useDispatch()
+    const [stepRecords, setStepRecordsState] = useState([]);
     const [loading, setLoading] = useState(true);
     const [stepsInput, setStepsInput] = useState('');
     const [weight, setWeight] = useState('');
@@ -14,7 +17,8 @@ const Stepsrecords = () => {
             setLoading(true);
             try {
                 const data = await getStepRecords();
-                setStepRecords(data);
+                dispatch(setStepRecords(data))
+                setStepRecordsState(data);
             } catch (err) {
                 setError("Failed to fetch step records.");
             }
@@ -46,23 +50,13 @@ const Stepsrecords = () => {
 
             // Fetch the updated step records after adding a new one
             const updatedRecords = await getStepRecords();
-            console.log(updatedRecords)
-            setStepRecords(updatedRecords);
+            dispatch(setStepRecords(data))
+            setStepRecordsState(data);
+            setStepRecordsState(updatedRecords);
         } catch (err) {
             setError("Failed to add step record.");
         }
     };
-    // const handleSubmit = async () => {
-    //     try {
-    //       const response = await axiosInstance.post('http://localhost:8000/api/steps/', {
-    //         steps: steps,
-    //         weight: weight
-    //       });
-    //       console.log('Response:', response); // Log the response
-    //     } catch (error) {
-    //       console.log('Error:', error); // Log the error
-    //     }
-    //   };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -107,14 +101,7 @@ const Stepsrecords = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.isArray(stepRecords) && stepRecords.length > 0 ? (
-                    stepRecords.map((record) => (
-                        <div key={record.id} className="bg-white p-4 rounded-xl shadow-md">
-                            <h2 className="text-xl font-semibold">Date: {record.date}</h2>
-                            <p>Steps: {record.steps}</p>
-                            <p>Weight: {record.weight} kg</p>
-                            <p>Calories Burned: {record.caloriesburned}</p>
-                        </div>
-                    ))
+                    <StepChart stepRecords={stepRecords} />
                 ) : (
                     <p>No step records found.</p>
                 )}

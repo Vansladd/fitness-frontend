@@ -1,7 +1,10 @@
+import CaloriesChart from "./CaloriesChart";
 import Stepsrecords from "./Stepsrecords";
+import { useSelector } from 'react-redux';
 
 
 const MainContent = () => {
+    const stepRecords = useSelector((state) => state.stepRecords.stepRecords);
     return (
       <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Steps Tracker */}
@@ -13,7 +16,7 @@ const MainContent = () => {
         {/* Calorie Estimator */}
         <div className="bg-white p-4 rounded-xl shadow-md">
           <h2 className="text-xl font-semibold">Calorie Estimator</h2>
-          <p>See how many calories you've burned.</p>
+          <CaloriesChart stepRecords={stepRecords}/>
         </div>
   
         {/* Workout Log */}
