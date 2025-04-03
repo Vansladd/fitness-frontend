@@ -1,0 +1,18 @@
+@keyframes pacman {
+    0%, 100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+    50% { clip-path: polygon(0% 0%, 100% 0%, 50% 50%, 100% 100%, 0% 100%); }
+  }
+  
+  @keyframes dot {
+    0% { opacity: 0; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(10px); }
+    100% { opacity: 0; transform: translateX(20px); }
+  }
+  
+  .clip-pacman { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+  .animate-pacman { animation: pacman 0.5s infinite; }
+  .animate-dot { animation: dot 1s infinite; }
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-500 { animation-delay: 0.5s; }
+  

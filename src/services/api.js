@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import axiosInstance from "./axiosinstance";
+import {jwtDecode} from "jwt-decode"
 
 const API_URL = "http://localhost:8000/api";
 
@@ -58,3 +59,45 @@ export const addStepRecord = async (data) => {
       throw error;
   }
 };
+
+export const getLeaderBoard = async () => {
+  try{
+    const response = await axiosInstance.get("/leaderboard/");
+    return response.data
+  } catch(err){
+    console.error("Couldn't retrieve data", err);
+    throw err;
+  }
+}
+
+
+export const getUserProfile = async () => {
+  try{
+    const response = await axiosInstance.get("/profile/")
+    return response.data
+  } catch(error){
+    console.error("Failed to retrieve User Info",error)
+    throw error
+  }
+}
+
+export const getUserid = () => {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.user_id;  // User ID extracted from the token
+    console.log(userId);  // Use this for frontend operations if needed
+    return(userId)
+  }
+}
+
+export const updateProfile = async () => {
+  try{
+    const response = axiosInstance.put("/profile/", formData);
+    return null
+  } catch(error) {
+    console.error("Failed to Update Profile", error)
+    throw error
+
+  }
+}

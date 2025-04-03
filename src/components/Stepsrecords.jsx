@@ -3,6 +3,7 @@ import { getStepRecords, addStepRecord } from '../services/api';
 import StepChart from './StepChart';
 import { useDispatch } from 'react-redux';
 import { setStepRecords } from '../services/stepRecordsSlice';
+import Loader from './Loader';
 
 const Stepsrecords = () => {
     const dispatch = useDispatch()
@@ -50,8 +51,7 @@ const Stepsrecords = () => {
 
             // Fetch the updated step records after adding a new one
             const updatedRecords = await getStepRecords();
-            dispatch(setStepRecords(data))
-            setStepRecordsState(data);
+            dispatch(setStepRecords(updatedRecords))
             setStepRecordsState(updatedRecords);
         } catch (err) {
             setError("Failed to add step record.");
@@ -59,7 +59,7 @@ const Stepsrecords = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     if (error) {
@@ -103,6 +103,7 @@ const Stepsrecords = () => {
                 {Array.isArray(stepRecords) && stepRecords.length > 0 ? (
                     <StepChart stepRecords={stepRecords} />
                 ) : (
+
                     <p>No step records found.</p>
                 )}
             </div>
