@@ -1,38 +1,50 @@
 import CaloriesChart from "./CaloriesChart";
 import Stepsrecords from "./Stepsrecords";
 import { useSelector } from 'react-redux';
-
+import WorkoutLog from "./WorkoutLog";
 
 const MainContent = () => {
-    const stepRecords = useSelector((state) => state.stepRecords.stepRecords);
-    const darkMode = useSelector((state) => state.darkMode.darkMode)
-    return (
-      <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  const stepRecords = useSelector((state) => state.stepRecords.stepRecords);
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
+
+  const cardStyles = `rounded-2xl p-6 transition-all border shadow-md flex flex-col 
+    ${darkMode 
+      ? "bg-gray-900 text-gray-200 border-gray-700 shadow-black/30" 
+      : "bg-white text-gray-800 border-gray-200 shadow-gray-300"
+    }`;
+
+  const headingStyles = "text-2xl font-bold mb-4";
+
+  return (
+    <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Left Column: Steps + Calories (2/3 width) */}
+      <div className="lg:col-span-2 flex flex-col gap-8">
         {/* Steps Tracker */}
-        <div  className={`p-4 rounded-xl transition-all 
-            ${darkMode ? "bg-gray-800 text-gray-300 shadow-lg shadow-gray-900 border border-gray-700" 
-                       : "bg-white text-gray-800 shadow-lg shadow-gray-300 border border-gray-200"}`}>
-          <h2 className="text-xl font-semibold">Steps Tracker</h2>
-          <Stepsrecords/>
+        <div className={cardStyles}>
+          <h2 className={headingStyles}>🚶‍♂️ Steps Tracker</h2>
+          <div className="flex-grow min-h-[300px]">
+            <Stepsrecords />
+          </div>
         </div>
-  
+
         {/* Calorie Estimator */}
-        <div  className={`p-4 rounded-xl transition-all 
-            ${darkMode ? "bg-gray-800 text-gray-300 shadow-lg shadow-gray-900 border border-gray-700" 
-                       : "bg-white text-gray-800 shadow-lg shadow-gray-300 border border-gray-200"}`}>
-          <h2 className="text-xl font-semibold">Calorie Estimator</h2>
-          <CaloriesChart stepRecords={stepRecords}/>
-        </div>
-  
-        {/* Workout Log */}
-        <div  className={`p-4 rounded-xl transition-all 
-            ${darkMode ? "bg-gray-800 text-gray-300 shadow-lg shadow-gray-900 border border-gray-700" 
-                       : "bg-white text-gray-800 shadow-lg shadow-gray-300 border border-gray-200"}`}>
-          <h2 className="text-xl font-semibold">Workout Log</h2>
-          <p>Log your daily workouts here.</p>
+        <div className={cardStyles}>
+          <h2 className={headingStyles}>🔥 Calorie Estimator</h2>
+          <div className="flex-grow min-h-[300px]">
+            <CaloriesChart stepRecords={stepRecords} />
+          </div>
         </div>
       </div>
-    );
-  };
-  
-  export default MainContent;
+
+      {/* Right Column: Workout Log (1/3 width) */}
+      <div className={cardStyles}>
+        <h2 className={headingStyles}>🏋️ Workout Log</h2>
+        <div className="flex-grow min-h-[630px]"> {/* Matches combined height of above */}
+          <WorkoutLog />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MainContent;

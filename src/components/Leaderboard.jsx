@@ -32,8 +32,8 @@ const Leaderboard = () => {
         return <Loader/>
     }
     return (
-        <div className={`overflow-x-auto p-4 ${darkMode ? "text-white" : "text-black"}`}>
-      <table className="min-w-full shadow-md rounded-lg overflow-hidden">
+        <div className={`overflow-x-auto p-4 h-screen ${darkMode ? "text-white" : "text-black"}`}>
+      <table className="min-w-full h-full shadow-md rounded-lg overflow-hidden">
         <thead className={`${darkMode ? "bg-blue-900 text-white" : "bg-blue-600 text-white"}`}>
           <tr>
             <th className="py-3 px-6 text-left">Rank</th>

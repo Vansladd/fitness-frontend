@@ -91,13 +91,22 @@ export const getUserid = () => {
   }
 }
 
-export const updateProfile = async () => {
+export const updateProfile = async (formData) => {
   try{
     const response = axiosInstance.put("/profile/", formData);
-    return null
   } catch(error) {
     console.error("Failed to Update Profile", error)
     throw error
 
   }
 }
+
+export const fetchWorkouts = async () => {
+  const response = await axiosInstance.get("/workout/");
+  return response.data;
+};
+
+export const logWorkout = async (workoutData) => {
+  const response = await axiosInstance.post("/workout/", workoutData);
+  return response.data;
+};

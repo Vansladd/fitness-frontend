@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
 const Home = () => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
     return (
-      <div className={`flex flex-col items-center justify-center min-h-screen ${darkMode ? "text-white" : "text-gray"}`}>
+      <div className={`flex flex-col items-center justify-center h-screen ${darkMode ? "text-white" : "text-gray"}`}>
         <header className="text-center">
           <h1 className="text-4xl font-bold mb-4">Welcome to FitTrack</h1>
           <p className="text-lg text-gray-600 mb-6">

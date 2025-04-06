@@ -15,4 +15,7 @@
   .delay-100 { animation-delay: 0.1s; }
   .delay-300 { animation-delay: 0.3s; }
   .delay-500 { animation-delay: 0.5s; }
-  
+
+  html, body, #root {
+    height: 100%;
+  }
