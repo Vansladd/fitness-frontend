@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie"; // Import cookie library
 import { refreshAccessToken } from "./api";
 
-const API_URL = import.meta.env.VITE_API_URL; // Default to localhost for development
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api"; // Default to localhost for development
 
 
 const axiosInstance = axios.create({
@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 // Request Interceptor: Attach token before every request
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const accessToken = Cookies.get("access_token"); // Get from cookies (for security)
+    const accessToken = localStorage.getItem("access_token"); // Get from cookies (for security)
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -32,14 +32,14 @@ axiosInstance.interceptors.response.use(
       try {
         const newAccessToken = await refreshAccessToken();
         if (newAccessToken) {
-          Cookies.set("access_token", newAccessToken); // Set new access token in cookies
+          localStorage.setItem("access_token", newAccessToken); // Set new access token in cookies
           axiosInstance.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosInstance(originalRequest); // Retry the failed request
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
-        Cookies.remove("access_token"); // Remove token from cookies
-        Cookies.remove("refresh_token"); // Remove refresh token as well
+        localStorage.removeItem("access_token"); // Remove token from cookies
+        localStorage.removeItem("refresh_token"); // Remove refresh token as well
         window.location.href = "/login"; // Redirect to login on failure
       }
     }

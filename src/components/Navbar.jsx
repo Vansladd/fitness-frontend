@@ -3,10 +3,9 @@ import LogoutButton from "./LogoutButton";
 import DarkModeToggle from "./DarkModeToggle";
 import { useSelector } from "react-redux";
 import { getUserid } from "../services/api";
-import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const token = Cookies.get("access_token");
+  const token = localStorage.getItem("access_token");
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   return (
