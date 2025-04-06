@@ -12,6 +12,7 @@ const Leaderboard = () => {
     const darkMode = useSelector((state) => state.darkMode.darkMode);
 
     useEffect(() => {
+        document.title = "LeaderBoard";
         const fetchLeaderboard = async () => {
             try{
                 let data = await getLeaderBoard();

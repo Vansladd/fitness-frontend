@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "FitTrack";
+  },[])
   const darkMode = useSelector((state) => state.darkMode.darkMode);
     return (
       <div className={`flex flex-col items-center justify-center h-screen ${darkMode ? "text-white" : "text-gray"}`}>

@@ -13,6 +13,7 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    document.title = "Profile"
     const fetchData = async () => {
       try {
         const data = await getUserProfile();
